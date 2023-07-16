@@ -55,6 +55,7 @@ Assume loss is **residual sum of squares (RSS)**
 ## [Explain Principle Component Analysis (PCA)?](https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c)
 PCA is a dimensionality reduction technique to reduce the number of features of a dataset while retaining as much information as possible. It works by identifying the directions (principle components) in which the data varies the most and project the data onto a lower-dimensional subspace along these directions (chooses a K-dim subspace to **maximize** the projected variance and project data onto it).
 
+[supplement](http://www.cs.toronto.edu/~rahulgk/courses/csc311_f22/lectures/lec09_annotated_alicegao.pdf)
 ### Intuition
 - PCA takes in `X` (data) and `k` (how many  parts we want to learn) and outputs two matrices `W (PCs)` and `Z (PC scores)`.
 - each row of `W (size k*d)` is one principle component
@@ -73,6 +74,10 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 7. Compute the C scores `Z = XW`.
 8. The approximation is `ZW`
 
+## Why is ReLU better and more often used than Sigmoid in Neural Networks?
+1. **Activation functions**: Introduces non-linearity into the output of a neuron. Otherwise, no matter how many layers we have, if all are linear in nature, the final activation function of last layer is nothing but just a linear function of the input of first layer! That means these two layers ( or N layers ) can be replaced by a single layer.
+2. **Sigmoid function**: $\frac{1}{1+e^{-x}}$
+3. **ReLU**: 
 # Computer Vision
 
 

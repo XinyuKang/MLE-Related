@@ -5,9 +5,7 @@
 ## [What's the trade-off between bias and variance?](https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229)
 1. Bias is an error from wrong assumptions about the data, e.g. assuming data is linear when in reality is complex. Model with high bias pays very little attention to the training data and oversimplifies the model. Leads to high error on training and test data.
 2. Variance is an error from high sensitivity to small fluctuations in the training set. Model with high variance pays too much attention to the training data and does not generalize on the data it hasn't seen before. Thus performs very well on the training data but very bad on the test data.
-3. **Underfitting** heppens when a model is unable to capture the underlying pattern of the data (`high bias and low variance`). Happens when training set is too small or training model is too simple.
-4. **Overfitting** happens when model captures the noise along with the underlying pattern in data (`low bias and high variance`). Happens when train model a lot over noisy dataset or model is too complex.
-5. Why is tradeoff? Simple model (few parameters) -> high bias and low variance. Complx model -> high variance and low bias. Thus need good balance without overfitting or underfitting. An optimal balance of bias and variance would never overfit or undefit the model.
+3. Why is tradeoff? `Simple model (few parameters) -> high bias and low variance. Complx model -> high variance and low bias.` Thus need good balance without overfitting or underfitting. An optimal balance of bias and variance would never overfit or undefit the model.
 
 ## [What is gradient descent?](https://machinelearningmastery.com/gradient-descent-for-machine-learning/)
 1. It's an optimization algorithm used to find the values of parameters (coefficients) of a function (f) that minimizes a cost function.
@@ -21,6 +19,13 @@
 - SGD might point in the wwrong direction but the expected (average) direction is correct.
 
 ## [Explain over- and under-fitting and how to comba them?](https://towardsdatascience.com/overfitting-vs-underfitting-a-complete-example-d05dd7e19765)
-
+1. **Underfitting** heppens when a model is unable to capture the underlying pattern of the data (`high bias and low variance`). Happens when training set is too small or training model is too simple.
+2. **Overfitting** happens when model captures the noise along with the underlying pattern in data, i.e. "memorize" the trianing data (`low bias and high variance`). Happens when train model a lot over noisy dataset or model is too complex.
+3. **Validation** to avoid overfirtting, but might still overfit to the validation set. Therefore uses **k-fold cross-validation**: 
+- Split the training set into subsets called `folds`.
+- Each time train on `n-1` of the folds and test on the remaining one.
+- Repeat this `n times` and each time uses a different fold for test.
+- Finally average the scores for each of the folds to get the overal performance.
+- Do k-fold cross-validation for all models and select the model with the lowest cross-validation score which has a good balance between overfitting and underfitting.
 
 # Computer Vision

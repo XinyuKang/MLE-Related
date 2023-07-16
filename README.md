@@ -62,7 +62,7 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 - each row of `Z (size n*k)` is the part weights
 - `ZW (size n*d)` is the approximation of the n data points and each row of `ZW` is the approximation of one data point `i.e. xi = zw[i]`
 - **Dimensionality reduction**: replace `X` with lower dimensional `Z`, if `k << d` then compress data
-  ![](PCA.jpg)  ![](PCA2.jpg)
+<img src="PCA.jpg"  width="600" height="200"> <img src="PCA2.jpg"  width="600" height="200">
   
 ### Steps:
 1. Standardize the data.
@@ -76,15 +76,17 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 
 ## Why is ReLU better and more often used than Sigmoid in Neural Networks?
 1. **Activation functions**: Introduces non-linearity into the output of a neuron. Otherwise, no matter how many layers we have, if all are linear in nature, the final activation function of last layer is nothing but just a linear function of the input of first layer! That means these two layers ( or N layers ) can be replaced by a single layer.
-2. **Sigmoid function**: $\frac{1}{1+e^{-x}}$
-![](sigmoid.jpg)
+2. **Sigmoid function**: 
+<img src="sigmoid.jpg"  width="300" height="200">
+
 3. **ReLU**:
-![](relu.jpg)
+<img src="relu.jpg"  width="300" height="200">
    
 ### Why is ReLU better than Sigmoid?
 1. Computation Efficiency: As ReLU is a simple threshold the forward and backward path will be faster.
 2. Reduced Likelihood of Vanishing Gradient: Gradient of ReLU is 1 for positive values and 0 for negative values while Sigmoid activation saturates (gradients close to 0) quickly with slightly higher or lower inputs leading to vanishing gradients.
-![](derivative-of-sigmoid.jpg)
+<img src="derivative-of-sigmoid.jpg"  width="400" height="250">
+
 3. Sparsity: Sparsity happens when the input of ReLU is negative. This means fewer neurons are firing ( sparse activation ) and the network is lighter.
 
 ## What is vanishing gradient?
@@ -96,12 +98,14 @@ During the backpropogation of each iteration, weights are updated by gradient de
 2. **Stride**: the amount of movement over the image at a time.
 ### [Receptive field](https://blog.mlreview.com/a-guide-to-receptive-field-arithmetic-for-convolutional-neural-networks-e0f514068807)
 Is region in the `input` that produces the feature. It's described by its `center location` and its `size`. Within a receptive field, the closer a pixel to the center of the field, the more it contributes to the calculation of the output feature. 
-1. Calculation of the output feature map size:
+1. Calculation of the `output feature map` size:
    
-   ![](output-calculate.jpg)
-   
+   <img src="output-calculate.jpg"  width="300" height="200">
+   where `p` is the padding size. `k` is the kernel size, `s` is the stride size. 
    Note that if the input image is not a square. need to calculate the feature map separatey for each dimension.
-3. 
+2. Calculation of the `receptive field` size:
+   where `j` is the distance between two adjacent features, `start` is the the center coordinate of the first (upper-left) feature, which is also the center coordinate of the receptive field
+4. 
 # Some conventions
 1. One iteration == one batch, the cost is calculated over the entaire training dataset for each iteration.
 2. Noise means the data points that don't really represent the true properties of your data.

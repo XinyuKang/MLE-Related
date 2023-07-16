@@ -30,15 +30,38 @@
 2. Solution 1: **Manual feature selection**:
 - **The association approach**: for each feature `j`, compute correlation between feature values `xj` and `y` and j is relevant if the correlation is `> 0.9 or < -0.9`. But this ignores variable interactions.
 - **The "regression weight" approach**: calculate regression weights on all features and takes the features where its weight is > a certain treshold. `Collinearity` is the major problem.
-3. Solution 2: **Principal component analysis and singular value decomposition (PCA)**
+3. Solution 2: **Principal component analysis (PCA)**
 - PCA takes in `X` (data) and `k` (how many  parts we want to learn) and outputs two matrices `W (PCs)` and `Z (PC scores)`.
 - each row of `W (size k*d)` is one principle component
 - each row of `Z (size n*k)` is the part weights
 - `ZW (size n*d)` is the approximation of the n data points and each row of `ZW` is the approximation of one data point `i.e. xi = zw[i]`
 - **Dimensionality reduction**: replace `X` with lower dimensional 'Z', if `k << d` then compress data
-- ![](PCA.jpg)  ![](PCA2.jpg)
+  ![](PCA.jpg)  ![](PCA2.jpg)
+4. Solution 3: **Single value decomposition**: TODO
+5. Solution 4: **Multidimensional scaling**: TODO
+6. Solution 5: **Locally linear embedding**: TODO
+
+## (What is regularization, why do we use it, and give some examples of common methods?)[https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a]
+1. Besides `cross validation`,  `regularization` is another techinque that avoids overfitting. `Regularization` constrains the cost towards zero. It discourages learning a complex model, reduce variance and avoids overfitting.
+2. Regularization increases training error but decreases approximation error.
+3. Intuition: large weights tend to lead to overfitting therefore having smaller weights.
+4. `Regularization parameter` lambda controls strength of regularization.
+Assume loss is **residual sum of squares (RSS)**
+### Ridge regression (L2 norm)
+![](l2-norm.jpg)
+1. Adds the “squared magnitude” of the coefficient as the penalty term to the loss function.
+2. Will shrink the coefficients for the least important features, but will never make them exactly zero. 
+3. Larger coefficients contribute more to the penalty than smaller coefficients. As a result, the penalty term is more influenced by larger coefficients, the model adjusts the coefficients in such a way that the larger coefficients are reduced more than the smaller ones.
+
+## Lasso regression (L1 norm)
+![](l1-norm.jpg)
+1. Adds the “absolute value of magnitude” of the coefficient as a penalty term to the loss function.
+2. L1 penalty can force some coefficients to be exactly zero, thus helps in feature selection by eliminating the features that are not important. Thus L1 norm helps with model interpretability.
+
+
 # Computer Vision
 
 
 # Some conventions
 1. One iteration == one batch, the cost is calculated over the entaire training dataset for each iteration.
+2. Noise means the data points that don't really represent the true properties of your data.

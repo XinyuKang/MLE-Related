@@ -36,7 +36,7 @@
 - each row of `Z (size n*k)` is the part weights
 - `ZW (size n*d)` is the approximation of the n data points and each row of `ZW` is the approximation of one data point `i.e. xi = zw[i]`
 - **Dimensionality reduction**: replace `X` with lower dimensional 'Z', if `k << d` then compress data
-- 
+- ![](PCA.jpg)  ![](PCA2.jpg)
 # Computer Vision
 
 

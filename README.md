@@ -31,17 +31,11 @@
 - **The association approach**: for each feature `j`, compute correlation between feature values `xj` and `y` and j is relevant if the correlation is `> 0.9 or < -0.9`. But this ignores variable interactions.
 - **The "regression weight" approach**: calculate regression weights on all features and takes the features where its weight is > a certain treshold. `Collinearity` is the major problem.
 3. Solution 2: **Principal component analysis (PCA)**
-- PCA takes in `X` (data) and `k` (how many  parts we want to learn) and outputs two matrices `W (PCs)` and `Z (PC scores)`.
-- each row of `W (size k*d)` is one principle component
-- each row of `Z (size n*k)` is the part weights
-- `ZW (size n*d)` is the approximation of the n data points and each row of `ZW` is the approximation of one data point `i.e. xi = zw[i]`
-- **Dimensionality reduction**: replace `X` with lower dimensional 'Z', if `k << d` then compress data
-  ![](PCA.jpg)  ![](PCA2.jpg)
 4. Solution 3: **Single value decomposition**: TODO
 5. Solution 4: **Multidimensional scaling**: TODO
 6. Solution 5: **Locally linear embedding**: TODO
 
-## (What is regularization, why do we use it, and give some examples of common methods?)[https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a]
+## [What is regularization, why do we use it, and give some examples of common methods?](https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a)
 1. Besides `cross validation`,  `regularization` is another techinque that avoids overfitting. `Regularization` constrains the cost towards zero. It discourages learning a complex model, reduce variance and avoids overfitting.
 2. Regularization increases training error but decreases approximation error.
 3. Intuition: large weights tend to lead to overfitting therefore having smaller weights.
@@ -53,11 +47,31 @@ Assume loss is **residual sum of squares (RSS)**
 2. Will shrink the coefficients for the least important features, but will never make them exactly zero. 
 3. Larger coefficients contribute more to the penalty than smaller coefficients. As a result, the penalty term is more influenced by larger coefficients, the model adjusts the coefficients in such a way that the larger coefficients are reduced more than the smaller ones.
 
-## Lasso regression (L1 norm)
+### Lasso regression (L1 norm)
 ![](l1-norm.jpg)
 1. Adds the “absolute value of magnitude” of the coefficient as a penalty term to the loss function.
 2. L1 penalty can force some coefficients to be exactly zero, thus helps in feature selection by eliminating the features that are not important. Thus L1 norm helps with model interpretability.
 
+## [Explain Principle Component Analysis (PCA)?](https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c)
+PCA is a dimensionality reduction technique to reduce the number of features of a dataset while retaining as much information as possible. It works by identifying the directions (principle components) in which the data varies the most and project the data onto a lower-dimensional subspace along these directions (chooses a K-dim subspace to **maximize** the projected variance and project data onto it).
+
+### Intuition
+- PCA takes in `X` (data) and `k` (how many  parts we want to learn) and outputs two matrices `W (PCs)` and `Z (PC scores)`.
+- each row of `W (size k*d)` is one principle component
+- each row of `Z (size n*k)` is the part weights
+- `ZW (size n*d)` is the approximation of the n data points and each row of `ZW` is the approximation of one data point `i.e. xi = zw[i]`
+- **Dimensionality reduction**: replace `X` with lower dimensional `Z`, if `k << d` then compress data
+  ![](PCA.jpg)  ![](PCA2.jpg)
+  
+### Steps:
+1. Standardize the data.
+2. Compute the covariance matrix of the features from the dataset.
+3. Perform eigendecompositon on the covariance matrix.
+4. Order the eigenvectors in decreasing order based on the magnitude of their corresponding eigenvalues.
+5. Determine k, the number of top principal components to select.
+6. Construct the projection matrix `W` from the chosen number of top `k` principal components.
+7. Compute the C scores `Z = XW`.
+8. The approximation is `ZW`
 
 # Computer Vision
 

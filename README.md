@@ -77,9 +77,9 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 ## Why is ReLU better and more often used than Sigmoid in Neural Networks?
 1. **Activation functions**: Introduces non-linearity into the output of a neuron. Otherwise, no matter how many layers we have, if all are linear in nature, the final activation function of last layer is nothing but just a linear function of the input of first layer! That means these two layers ( or N layers ) can be replaced by a single layer.
 2. **Sigmoid function**: $\frac{1}{1+e^{-x}}$
-   ![](sigmoid.jpg)
+![](sigmoid.jpg)
 3. **ReLU**:
-   ![](relu.jpg)
+![](relu.jpg)
    
 ### Why is ReLU better than Sigmoid?
 1. Computation Efficiency: As ReLU is a simple threshold the forward and backward path will be faster.

@@ -77,9 +77,18 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 ## Why is ReLU better and more often used than Sigmoid in Neural Networks?
 1. **Activation functions**: Introduces non-linearity into the output of a neuron. Otherwise, no matter how many layers we have, if all are linear in nature, the final activation function of last layer is nothing but just a linear function of the input of first layer! That means these two layers ( or N layers ) can be replaced by a single layer.
 2. **Sigmoid function**: $\frac{1}{1+e^{-x}}$
-   - 
+   ![](sigmoid.jpg)
 4. **ReLU**:
+
 ### Why is ReLU better than Sigmoid?
+1. Computation Efficiency: As ReLU is a simple threshold the forward and backward path will be faster.
+2. Reduced Likelihood of Vanishing Gradient: Gradient of ReLU is 1 for positive values and 0 for negative values while Sigmoid activation saturates (gradients close to 0) quickly with slightly higher or lower inputs leading to vanishing gradients.
+![](derivative-of-sigmoid.jpg)
+3. Sparsity: Sparsity happens when the input of ReLU is negative. This means fewer neurons are firing ( sparse activation ) and the network is lighter.
+
+## What is vanishing gradient?
+During the backpropogation of each iteration, weights are updated by gradient descent. As we add more and more hidden layers, back propagation becomes less and less useful in passing information to the lower layers. In effect, as information is passed back, the gradients begin to vanish and become small relative to the weights of the networks. In the worst case, this may completely stop the neural network from further training.
+
 # Computer Vision
 
 

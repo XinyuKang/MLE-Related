@@ -78,8 +78,8 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 1. **Activation functions**: Introduces non-linearity into the output of a neuron. Otherwise, no matter how many layers we have, if all are linear in nature, the final activation function of last layer is nothing but just a linear function of the input of first layer! That means these two layers ( or N layers ) can be replaced by a single layer.
 2. **Sigmoid function**: $\frac{1}{1+e^{-x}}$
    ![](sigmoid.jpg)
-4. **ReLU**:
-
+3. **ReLU**:
+   ![](relu.jpg)
 ### Why is ReLU better than Sigmoid?
 1. Computation Efficiency: As ReLU is a simple threshold the forward and backward path will be faster.
 2. Reduced Likelihood of Vanishing Gradient: Gradient of ReLU is 1 for positive values and 0 for negative values while Sigmoid activation saturates (gradients close to 0) quickly with slightly higher or lower inputs leading to vanishing gradients.
@@ -90,8 +90,13 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 During the backpropogation of each iteration, weights are updated by gradient descent. As we add more and more hidden layers, back propagation becomes less and less useful in passing information to the lower layers. In effect, as information is passed back, the gradients begin to vanish and become small relative to the weights of the networks. In the worst case, this may completely stop the neural network from further training.
 
 # Computer Vision
-
-
+## (Given stride S and kernel sizes for each layer of a (1-dimensional) CNN, create a function to compute the receptive field of a particular node in the network. This is just finding how many input nodes actually connect through to a neuron in a CNN.)[https://arxiv.org/pdf/1603.07285.pdf] 
+1. **Padding**: the amount of pixels added to an image when it is being processed.
+2. **Stride**: the amount of movement over the image at a time.
+### (Receptive field)[https://blog.mlreview.com/a-guide-to-receptive-field-arithmetic-for-convolutional-neural-networks-e0f514068807]
+Is region in the `input` that produces the feature. It's described by its `center location` and its `size`. Within a receptive field, the closer a pixel to the center of the field, the more it contributes to the calculation of the output feature. 
+1. Calculation of the output feature map size: ![](output-calculate.jpg) Note that if the input image is not a square. need to calculate the feature map separatey for each dimension.
+2. 
 # Some conventions
 1. One iteration == one batch, the cost is calculated over the entaire training dataset for each iteration.
 2. Noise means the data points that don't really represent the true properties of your data.

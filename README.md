@@ -80,6 +80,7 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
    ![](sigmoid.jpg)
 3. **ReLU**:
    ![](relu.jpg)
+   
 ### Why is ReLU better than Sigmoid?
 1. Computation Efficiency: As ReLU is a simple threshold the forward and backward path will be faster.
 2. Reduced Likelihood of Vanishing Gradient: Gradient of ReLU is 1 for positive values and 0 for negative values while Sigmoid activation saturates (gradients close to 0) quickly with slightly higher or lower inputs leading to vanishing gradients.
@@ -96,7 +97,9 @@ During the backpropogation of each iteration, weights are updated by gradient de
 ### [Receptive field](https://blog.mlreview.com/a-guide-to-receptive-field-arithmetic-for-convolutional-neural-networks-e0f514068807)
 Is region in the `input` that produces the feature. It's described by its `center location` and its `size`. Within a receptive field, the closer a pixel to the center of the field, the more it contributes to the calculation of the output feature. 
 1. Calculation of the output feature map size:
+   
    ![](output-calculate.jpg)
+   
    Note that if the input image is not a square. need to calculate the feature map separatey for each dimension.
 3. 
 # Some conventions

@@ -25,6 +25,16 @@
 - Finally average the scores for each of the folds to get the overal performance.
 - Do k-fold cross-validation for all models and select the model with the lowest cross-validation score which has a good balance between overfitting and underfitting.
 
+## What is stratified cross-validation and when should we use it?
+On typical cross-validation this split is done randomly. But in stratified cross-validation, the split preserves the ratio of the categories on both the training and validation datasets.
+
+For example, if we have a dataset with 10% of category A and 90% of category B, and we use stratified cross-validation, we will have the same proportions in training and validation. In contrast, if we use simple cross-validation, in the worst case we may find that there are no samples of category A in the validation set.
+
+Stratified cross-validation may be applied in the following scenarios:
+
+- On a dataset with multiple categories. The smaller the dataset and the more imbalanced the categories, the more important it will be to use stratified cross-validation.
+- On a dataset with data of different distributions. For example, in a dataset for autonomous driving, we may have images taken during the day and at night. If we do not ensure that both types are present in training and validation, we will have generalization problems.
+
 ## [How do you combat the curse of dimensionality?](https://towardsdatascience.com/why-and-how-to-get-rid-of-the-curse-of-dimensionality-right-with-breast-cancer-dataset-7d528fb5f6c0)
 1. **The curse of dimensionality**: when the dimensionality of the `data` increases, the volume of the space increases so fast that the available data becomes sparse and dissimilar. In order to obtain a reliable result, the amount of data needed often `grows exponentially` with the dimensionality. 
 2. Solution 1: **Manual feature selection**:
@@ -112,6 +122,49 @@ Binary cross-entropy formula:
 
 **Decision tree** use entropy in their construction: in order to be as effective as possible in directing inputs down a series of conditions to a correct outcome, feature splits (conditions) with lower entropy (higher information gain) are placed higher on the tree. Placing the lowest-entropy condition at the top may assist split nodes below it in decreasing entropy.
 
+## Why do ensembles typically have higher scores than individual models?
+An ensemble is the combination of multiple models to create a single prediction. The key idea for making better predictions is that the models should make different errors. That way the errors of one model will be compensated by the right guesses of the other models and thus the score of the ensemble will be higher.
+
+We need diverse models for creating an ensemble. Diversity can be achieved by:
+
+- Using different ML algorithms. For example, you can combine logistic regression, k-nearest neighbors, and decision trees.
+- Using different subsets of the data for training. This is called **bagging**.
+- Giving a different weight to each of the samples of the training set. If this is done iteratively, weighting the samples according to the errors of the ensemble, it’s called **boosting**.
+
+Many winning solutions to data science competitions are ensembles. However, in real-life machine learning projects, engineers need to find a balance between execution time and accuracy.
+
+## Why do we need a validation set and test set? What is the difference between them?
+When training a model, we divide the available data into three separate sets:
+
+The training dataset is used for fitting the model’s parameters. However, the accuracy that we achieve on the training set is not reliable for predicting if the model will be accurate on new samples.
+
+The validation dataset is used to measure how well the model does on examples that weren’t part of the training dataset. The metrics computed on the validation data can be used to tune the hyperparameters of the model. However, every time we evaluate the validation data and we make decisions based on those scores, we are leaking information from the validation data into our model. The more evaluations, the more information is leaked. So we can end up overfitting to the validation data, and once again the validation score won’t be reliable for predicting the behaviour of the model in the real world.
+
+The test dataset is used to measure how well the model does on previously unseen examples. It should `only be used once we have tuned the parameters` using the validation set.
+
+So if we omit the test set and only use a validation set, the validation score won’t be a good estimate of the generalization of the model.
+
+## Implement non maximal suppression as efficiently as you can.
+Non-Maximum Suppression (NMS) is a technique used to eliminate multiple detections of the same object in a given image. To solve that first sort bounding boxes based on their scores(N LogN). Starting with the box with the highest score, remove boxes whose overlapping metric(IoU) is greater than a certain threshold.(N^2)
+
+To optimize this solution you can use special data structures to query for overlapping boxes such as R-tree or KD-tree. (N LogN)
+
+## What is an imbalanced dataset? Can you list some ways to deal with it? 
+An imbalanced dataset is one that has different proportions of target categories. For example, a dataset with medical images where we have to detect some illness will typically have many more negative samples than positive samples—say, 98% of images are without the illness and 2% of images are with the illness.
+
+There are different options to deal with imbalanced datasets:
+
+Oversampling or undersampling. Instead of sampling with a uniform distribution from the training dataset, we can use other distributions so the model sees a more balanced dataset.
+Data augmentation. We can add data in the less frequent categories by modifying existing data in a controlled way. In the example dataset, we could flip the images with illnesses, or add noise to copies of the images in such a way that the illness remains visible.
+Using appropriate metrics. In the example dataset, if we had a model that always made negative predictions, it would achieve a precision of 98%. There are other metrics such as precision, recall, and F-score that describe the accuracy of the model better when using an imbalanced dataset.
+
+## Can you explain the differences between supervised, unsupervised, and reinforcement learning?
+In **supervised learning**, we train a model to `learn the relationship` between input data and output data. We need to have labeled data to be able to do supervised learning.
+
+With **unsupervised learning**, we only have unlabeled data. The model `learns a representation of the data`. Unsupervised learning is frequently used to initialize the parameters of the model when we have a lot of unlabeled data and a small fraction of labeled data. We first train an unsupervised model and, after that, we use the weights of the model to train a supervised model.
+
+In [**reinforcement learning**](https://www.geeksforgeeks.org/what-is-reinforcement-learning/), the model has some input data and a reward depending on the output of the model. The model learns a policy that maximizes the reward. After each action, the algorithm receives feedback that helps it determine whether the choice it made was correct, neutral or incorrect. It is a good technique to use for automated systems that have to make a lot of small decisions without human guidance.
+
 # Computer Vision
 ## [Given stride S and kernel sizes for each layer of a (1-dimensional) CNN, create a function to compute the receptive field of a particular node in the network. This is just finding how many input nodes actually connect through to a neuron in a CNN.](https://arxiv.org/pdf/1603.07285.pdf)
 1. **Padding**: the amount of pixels added to an image when it is being processed.
@@ -164,6 +217,21 @@ In a convolutional neural network (CNN), the convolution operation is applied to
 
 When the input is RGB(or more than 3 channels) the sliding window will be a sliding cube. The shape of the next layer is determined by Kernel size, number of kernels, stride, padding, and dialation.
 
+## Why do we use convolutions for images rather than just FC layers? 
+Firstly, convolutions preserve, encode, and actually use the spatial information from the image. If we used only FC layers (A fully connected layer multiplies the input by a weight matrix and then adds a bias vector) we would have no relative spatial information. Secondly, Convolutional Neural Networks (CNNs) have a partially built-in [translation in-variance](the system produces exactly the same response, regardless of how its input is shifte), since each convolution kernel acts as it's own filter/feature detector.
+
+## Why do we have max-pooling in classification CNNs?
+For a role in Computer Vision. Max-pooling in a CNN allows you to reduce computation since your feature maps are smaller after the pooling. You don't lose too much semantic information since you're taking the maximum activation. There's also a theory that max-pooling contributes a bit to giving CNNs more translation in-variance. 
+
+## Why do segmentation CNNs typically have an encoder-decoder style / structure?
+The encoder CNN can basically be thought of as a feature extraction network, while the decoder uses that information to predict the image segments by "decoding" the features and upscaling to the original image size.
+
+## What is the significance of Residual Networks?
+The main thing that residual connections did was allow for `direct feature access from previous layers`. This makes information propagation throughout the network much easier. One very interesting paper about this shows how using `local skip` connections gives the network a type of ensemble multi-path structure, giving features multiple paths to propagate throughout the network.
+
+## Why would you use many small convolutional kernels such as 3x3 rather than a few large ones?
+There are 2 reasons: First, you can use several smaller kernels rather than few large ones to get the same receptive field and capture more spatial context, but with the smaller kernels you are `using less parameters and computations`. Secondly, because with smaller kernels you will be using more filters, you'll be able to use `more activation functions` and thus have a more discriminative mapping function being learned by your CNN.
+ 
 ## Talk me through how you would create a 3D model of an object from imagery and depth sensor measurements taken at all angles around the object.
 There are two popular methods for 3D reconstruction:
 ### [Structure from Motion (SfM)](https://www.mathworks.com/help/vision/ug/structure-from-motion.html)
@@ -171,12 +239,13 @@ Is the process of estimating the 3-D structure of a scene from a set of 2-D imag
 1. Structure from Motion from Two Views
 2. Structure from Motion from Multiple Views
 ### Multi-View Stereo (MVS)
-
 SfM is better suited for creating models of large scenes while MVS is better suited for creating models of small objects.
 
 # ML Models
 ## Decision Tree
 Decision trees are simple programs consisting of a nested sequence of “if-else” decisions based on the features (splitting rules) and A class label as a return value at the end of each sequence.
+
+## What is logistic regression?
 
 # [Some conventions](https://www.baeldung.com/cs/epoch-vs-batch-vs-mini-batch#:~:text=The%20mini%2Dbatch%20is%20a,of%20the%20dataset%20are%20used.)
 1. One iteration == one **batch** (the entire training set), the cost is calculated over the entaire training dataset for each iteration.

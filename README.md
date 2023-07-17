@@ -118,6 +118,20 @@ Is region in the `input` that produces the feature. The receptive filed of `a pa
 
 Note that in the case of an image of size 32x32x3, with a CNN with a filter size of 5x5, the corresponding recpetive field will be the the filter size, 5 multiplied by the depth of the input volume (the RGB colors) which is the color dimensio. This thus gives us a recpetive field of dimension 5x5x3.
 
-# Some conventions
-1. One iteration == one batch, the cost is calculated over the entaire training dataset for each iteration.
-2. Noise means the data points that don't really represent the true properties of your data.
+## What is batch normalization and why does it work?
+Normalization is to transform features to be on a similar scale and helps training. `Batch norm` does the same for the hidden layers. A network is a seires of layers where the output of one layers becomes the input of to the next. Any layer in a neural network is the first layer of a smaller subsequent network. 
+
+The distribution of each layer's inputs changes during the training as the parameters of the previous layers are changed by the backpropagation. Therefore, batch normalization normalizes the inputs of each layer to have mean of 0 and standard deciation of 1. 
+
+This is done for each mini-batch `at each layer`.
+
+The batch normalization can be applied before and after the activation function. However, research shows its best when applied before the activation function.
+
+# [Some conventions](https://www.baeldung.com/cs/epoch-vs-batch-vs-mini-batch#:~:text=The%20mini%2Dbatch%20is%20a,of%20the%20dataset%20are%20used.)
+1. One iteration == one **batch** (the entire training set), the cost is calculated over the entaire training dataset for each iteration.
+2. A **mini-batch** is a fixed number of training examples that is < than the actual training set. So in each iteration, we traing the network on a different group of samples unti all samples of the dataset are used.
+3. **Epoch** is a changing concept, An epoch means that we have passed each sample of the training set one time through the network to update the parameters. :
+   - In batch gradient descent, one epoch corresponds to a single iteration.
+   - In stochastic gradient descent, one epoch corresponds to n iterations where n is the number of training samples.
+   - In mini-batch gradient descent, one epoch corresponds to \frac{n}{b} iterations where b is the size of the mini-batch.
+5. Noise means the data points that don't really represent the true properties of your data.

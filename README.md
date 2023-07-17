@@ -97,15 +97,27 @@ During the backpropogation of each iteration, weights are updated by gradient de
 1. **Padding**: the amount of pixels added to an image when it is being processed.
 2. **Stride**: the amount of movement over the image at a time.
 ### [Receptive field](https://blog.mlreview.com/a-guide-to-receptive-field-arithmetic-for-convolutional-neural-networks-e0f514068807)
-Is region in the `input` that produces the feature. It's described by its `center location` and its `size`. Within a receptive field, the closer a pixel to the center of the field, the more it contributes to the calculation of the output feature. 
+Is region in the `input` that produces the feature. The receptive filed of `a particular layer` is is the number of input used by the filter. It's described by its `center location` and its `size`. Within a receptive field, the closer a pixel to the center of the field, the more it contributes to the calculation of the output feature. 
 1. Calculation of the `output feature map` size:
    
    <img src="output-calculate.jpg"  width="300" height="200">
+   
    where `p` is the padding size. `k` is the kernel size, `s` is the stride size. 
    Note that if the input image is not a square. need to calculate the feature map separatey for each dimension.
 2. Calculation of the `receptive field` size:
-   where `j` is the distance between two adjacent features, `start` is the the center coordinate of the first (upper-left) feature, which is also the center coordinate of the receptive field
-4. 
+   
+   <img src="receptive-calculate.jpg"  width="300" height="150">
+   
+   where `j` is the distance between two adjacent features, `r` is the receptive field size, `start` is the the center coordinate of the first (upper-left) feature, which is also the center coordinate of the receptive field.
+
+   Note that the center coordinate of the end feature is `end = start + r-1/2`
+
+### Receptive Field Arithmetic
+
+<img src="receptive-steps.jpg"  width="530" height="450">
+
+Note that in the case of an image of size 32x32x3, with a CNN with a filter size of 5x5, the corresponding recpetive field will be the the filter size, 5 multiplied by the depth of the input volume (the RGB colors) which is the color dimensio. This thus gives us a recpetive field of dimension 5x5x3.
+
 # Some conventions
 1. One iteration == one batch, the cost is calculated over the entaire training dataset for each iteration.
 2. Noise means the data points that don't really represent the true properties of your data.

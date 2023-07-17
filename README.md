@@ -1,4 +1,4 @@
-# General Machine Learning
+<img width="617" alt="image" src="https://github.com/XinyuKang/MLE-Related/assets/46883505/80436af9-79a4-45cc-88af-a604eb88f5bd"># General Machine Learning
 ## [What's the trade-off between bias and variance?](https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229)
 1. Bias is an error from wrong assumptions about the data, e.g. assuming data is linear when in reality is complex. Model with high bias pays very little attention to the training data and oversimplifies the model. Leads to high error on training and test data.
 2. Variance is an error from high sensitivity to small fluctuations in the training set. Model with high variance pays too much attention to the training data and does not generalize on the data it hasn't seen before. Thus performs very well on the training data but very bad on the test data.
@@ -15,7 +15,7 @@
 - The order of the training set must be randomized at each iteration to avoid getting stuck.
 - SGD might point in the wwrong direction but the expected (average) direction is correct.
 
-## [Explain over- and under-fitting and how to comba them?](https://towardsdatascience.com/overfitting-vs-underfitting-a-complete-example-d05dd7e19765)
+## [Explain over- and under-fitting and how to combat them?](https://towardsdatascience.com/overfitting-vs-underfitting-a-complete-example-d05dd7e19765)
 1. **Underfitting** heppens when a model is unable to capture the underlying pattern of the data (`high bias and low variance`). Happens when training set is too small or training model is too simple.
 2. **Overfitting** happens when model captures the noise along with the underlying pattern in data, i.e. "memorize" the trianing data (`low bias and high variance`). Happens when train model a lot over noisy dataset or model is too complex.
 3. **Validation** to avoid overfirtting, but might still overfit to the validation set. Therefore uses **k-fold cross-validation**: 
@@ -92,6 +92,26 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 ## What is vanishing gradient?
 During the backpropogation of each iteration, weights are updated by gradient descent. As we add more and more hidden layers, back propagation becomes less and less useful in passing information to the lower layers. In effect, as information is passed back, the gradients begin to vanish and become small relative to the weights of the networks. In the worst case, this may completely stop the neural network from further training.
 
+## [What is entropy?](https://towardsdatascience.com/understanding-entropy-the-golden-measurement-of-machine-learning-4ea97c663dc3)
+Entropy is a measurement of disorder/chaos or uncertainty in a system. The higher the entropy, the more chaos in the system.
+
+For example, roos a coins and ends up with [tails, heads, heads, tails] has high entropy, but [tails, tails, tails, tails] has low entropy.  
+
+A high entroopy means low information gain and low entropy means high information gain.
+
+Statistically, entropy is the "distance" between several probability mass distributions `p(x)`. 
+
+<img src="entropy-formula.jpg"  width="350" height="200">
+
+<img src="entropy-distribution.jpg"  width="400" height="200">
+
+### [What is cross-entropy?](https://towardsdatascience.com/what-is-cross-entropy-3bdb04c13616)
+Cross-entropy is a `loss function` often used in classification problems. The cross-entropy formula describes how closely the prediction is to the true values. If it is very close, we have a small cross-entropy and if it is not close we have a high cross-entropy. 
+Binary cross-entropy formula:
+<img src="cross-formula.jpg"  width="230" height="40">
+
+**Decision tree** use entropy in their construction: in order to be as effective as possible in directing inputs down a series of conditions to a correct outcome, feature splits (conditions) with lower entropy (higher information gain) are placed higher on the tree. Placing the lowest-entropy condition at the top may assist split nodes below it in decreasing entropy.
+
 # Computer Vision
 ## [Given stride S and kernel sizes for each layer of a (1-dimensional) CNN, create a function to compute the receptive field of a particular node in the network. This is just finding how many input nodes actually connect through to a neuron in a CNN.](https://arxiv.org/pdf/1603.07285.pdf)
 1. **Padding**: the amount of pixels added to an image when it is being processed.
@@ -126,6 +146,37 @@ The distribution of each layer's inputs changes during the training as the param
 This is done for each mini-batch `at each layer`.
 
 The batch normalization can be applied before and after the activation function. However, research shows its best when applied before the activation function.
+
+Batch normalization also helps prevent gradient vanishing. BN makes the network more robust at training.
+
+## How would you remove outliers when trying to estimate a flat plane from noisy samples? 
+**Random sample consensus (RANSAC)** is an iterative method to detect outliers.
+Two steps: 
+1. A sample subset containing minimal data items is randomly selected from the input dataset. A fitting model with model parameters is computed using only the elements of this sample subset. 
+2. The algorithm checks which elements of the entire dataset are consistent (`the consensus set`) with the model instantiated by the estimated model parameters obtained from the first step. A data element will be considered as an outlier if it does not fit the model within some error threshold defining the maximum data deviation of inliers. (Data elements beyond this deviation are outliers.)
+
+The RANSAC algorithm will iteratively repeat the above two steps until the obtained consensus set in certain iteration has `enough` inliers.
+
+Note that the model may be improved by re-estimating it by using all the members of the consensus set.
+
+## Describe how convolution works. What about if your inputs are grayscale vs RGB imagery? What determines the shape of the next layer?
+In a convolutional neural network (CNN), the convolution operation is applied to the input image using a small matrix called a kernel or filter. The kernel slides over the image in small steps, called strides, and performs element-wise multiplications with the corresponding elements of the image and then sums up the results. The output of this operation is called a feature map.
+
+When the input is RGB(or more than 3 channels) the sliding window will be a sliding cube. The shape of the next layer is determined by Kernel size, number of kernels, stride, padding, and dialation.
+
+## Talk me through how you would create a 3D model of an object from imagery and depth sensor measurements taken at all angles around the object.
+There are two popular methods for 3D reconstruction:
+### [Structure from Motion (SfM)](https://www.mathworks.com/help/vision/ug/structure-from-motion.html)
+Is the process of estimating the 3-D structure of a scene from a set of 2-D images.
+1. Structure from Motion from Two Views
+2. Structure from Motion from Multiple Views
+### Multi-View Stereo (MVS)
+
+SfM is better suited for creating models of large scenes while MVS is better suited for creating models of small objects.
+
+# ML Models
+## Decision Tree
+Decision trees are simple programs consisting of a nested sequence of “if-else” decisions based on the features (splitting rules) and A class label as a return value at the end of each sequence.
 
 # [Some conventions](https://www.baeldung.com/cs/epoch-vs-batch-vs-mini-batch#:~:text=The%20mini%2Dbatch%20is%20a,of%20the%20dataset%20are%20used.)
 1. One iteration == one **batch** (the entire training set), the cost is calculated over the entaire training dataset for each iteration.

@@ -1,4 +1,4 @@
-<img width="617" alt="image" src="https://github.com/XinyuKang/MLE-Related/assets/46883505/80436af9-79a4-45cc-88af-a604eb88f5bd"># General Machine Learning
+![tanh](https://github.com/XinyuKang/MLE-Related/assets/46883505/0ed3f311-51f2-4d36-b407-780375d5e57c)<img width="617" alt="image" src="https://github.com/XinyuKang/MLE-Related/assets/46883505/80436af9-79a4-45cc-88af-a604eb88f5bd"># General Machine Learning
 ## [What's the trade-off between bias and variance?](https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229)
 1. Bias is an error from wrong assumptions about the data, e.g. assuming data is linear when in reality is complex. Model with high bias pays very little attention to the training data and oversimplifies the model. Leads to high error on training and test data.
 2. Variance is an error from high sensitivity to small fluctuations in the training set. Model with high variance pays too much attention to the training data and does not generalize on the data it hasn't seen before. Thus performs very well on the training data but very bad on the test data.
@@ -83,6 +83,15 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 6. Construct the projection matrix `W` from the chosen number of top `k` principal components.
 7. Compute the C scores `Z = XW`.
 8. The approximation is `ZW`
+
+## List different activation neurons or functions.
+- Linear Neuron `y=w0*x0 + w1*x1 + w2*x2 + b`
+- Binary Threshold Neuron `y = 1 if x >=0 else 0`
+- Stochastic Binary Neuron  ???
+- Sigmoid Neuron `y = 1 / (1 + e^(-x))`
+- Tanh function `(e^(2alpha) - 1) / (e^(2alpha) + 1)` ![tanh](https://github.com/XinyuKang/MLE-Related/assets/46883505/c7126d44-4d9a-4e83-ba36-db21a160d010)
+
+- Rectified Linear Unit (ReLU) `y = x if x >=0 else 0`
 
 ## Why is ReLU better and more often used than Sigmoid in Neural Networks?
 1. **Activation functions**: Introduces non-linearity into the output of a neuron. Otherwise, no matter how many layers we have, if all are linear in nature, the final activation function of last layer is nothing but just a linear function of the input of first layer! That means these two layers ( or N layers ) can be replaced by a single layer.

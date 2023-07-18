@@ -154,16 +154,48 @@ An imbalanced dataset is one that has different proportions of target categories
 
 There are different options to deal with imbalanced datasets:
 
-Oversampling or undersampling. Instead of sampling with a uniform distribution from the training dataset, we can use other distributions so the model sees a more balanced dataset.
-Data augmentation. We can add data in the less frequent categories by modifying existing data in a controlled way. In the example dataset, we could flip the images with illnesses, or add noise to copies of the images in such a way that the illness remains visible.
-Using appropriate metrics. In the example dataset, if we had a model that always made negative predictions, it would achieve a precision of 98%. There are other metrics such as precision, recall, and F-score that describe the accuracy of the model better when using an imbalanced dataset.
+- **Oversampling or undersampling**. Instead of sampling with a uniform distribution from the training dataset, we can use other distributions so the model sees a more balanced dataset.
+- **Data augmentation**. We can add data in the less frequent categories by modifying existing data in a controlled way. In the example dataset, we could flip the images with illnesses, or add noise to copies of the images in such a way that the illness remains visible.
+- Using appropriate metrics. In the example dataset, if we had a model that always made negative predictions, it would achieve a precision of 98%. There are other metrics such as **precision, recall, and F-score** that describe the accuracy of the model better when using an imbalanced dataset.
 
 ## Can you explain the differences between supervised, unsupervised, and reinforcement learning?
 In **supervised learning**, we train a model to `learn the relationship` between input data and output data. We need to have labeled data to be able to do supervised learning.
 
 With **unsupervised learning**, we only have unlabeled data. The model `learns a representation of the data`. Unsupervised learning is frequently used to initialize the parameters of the model when we have a lot of unlabeled data and a small fraction of labeled data. We first train an unsupervised model and, after that, we use the weights of the model to train a supervised model.
 
-In [**reinforcement learning**](https://www.geeksforgeeks.org/what-is-reinforcement-learning/), the model has some input data and a reward depending on the output of the model. The model learns a policy that maximizes the reward. After each action, the algorithm receives feedback that helps it determine whether the choice it made was correct, neutral or incorrect. It is a good technique to use for automated systems that have to make a lot of small decisions without human guidance.
+In [**reinforcement learning**](https://www.geeksforgeeks.org/what-is-reinforcement-learning/), the model has some input data and a reward depending on the output of the model. The model learns a policy that maximizes the reward. Reinforcement learning uses algorithms that learn from outcomes and decide which action to take next. After each action, the algorithm receives feedback that helps it determine whether the choice it made was correct, neutral or incorrect. It is a good technique to use for automated systems that have to make a lot of small decisions without human guidance.
+
+Reinforcement learning is an `autonomous, self-teaching system` that essentially `learns by trial and error`. It performs actions `with the aim of maximizing rewards`, or in other words, it is learning by doing in order to achieve the best outcomes.
+
+Main points in Reinforcement learning:
+- Input: The input should be an initial state from which the model will start
+- Output: There are `many possible outputs` as there are a variety of solutions to a particular problem
+- Training: The training is based upon the input, The model will return a state and the user will decide to reward or punish the model based on its output.
+- The model keeps continues to learn.
+- The `best solution is decided based on the maximum reward`.
+
+## [What is Turing test?](https://en.wikipedia.org/wiki/Turing_test)
+It's test of a machine's ability to exhibit intelligent behaviour equivalent to that of a human.
+
+Turing proposed that a human evaluator would judge natural language conversations between a human and a machine designed to generate human-like responses. The evaluator would be aware that one of the two partners in conversation was a machine, and all participants would be separated from one another. The conversation would be limited to a text-only channel, such as a computer keyboard and screen, so the result would not depend on the machine's ability to render words as speech. If the evaluator could not reliably tell the machine from the human, the machine would be said to have passed the test. The test results would not depend on the machine's ability to give correct answers to questions, only on how closely its answers resembled those a human would give.
+
+##  [What is Precision, Recall, and F1-score?](https://towardsdatascience.com/the-f1-score-bec2bbc38aa6)
+1. `Precision = true positive / (true positive + false positive)`. Within everything that has been predicted as a positive, precision counts the percentage that is correct.
+- A not precise model may find a lot of the positives, but its selection method is noisy: it also wrongly detects many positives that aren’t actually positives.
+- A precise model is very “pure”: maybe it does not find all the positives, but the ones that the model does class as positive are very likely to be correct.
+2. `Recall = true positive / (true positive + false negative)`. Within everything that actually is positive, how many did the model succeed to find.
+- A model with high recall succeeds well in finding all the positive cases in the data, even though they may also wrongly identify some negative cases as positive cases.
+- A model with low recall is not able to find all (or a large part) of the positive cases in the data.
+3. F1-score: is the weighted average of `precision` and `recall`. The goal of the F1 score is to combine the precision and recall metrics into a single metric and it is much more convenient to have only one performance metric rather than multiple. It considers both `false positive` and `false negative` into account.
+`F1-Score = 2 * (precision * recall) / (precision + recall)`.
+- A model will obtain a high F1 score if both Precision and Recall are high
+- A model will obtain a low F1 score if both Precision and Recall are low
+- A model will obtain a medium F1 score if one of Precision and Recall is low and the other is high
+4. `Accuracy = number of correct predictions / number of total predictions`. Accuracy is a bad metric in the case of imbalanced data.
+
+### Precision-Recall Trade-Off
+Precision and recall are not particularly useful metrics when used in isolation. For instance, it is possible to have perfect recall by simply retrieving every single item. Likewise, it is possible to have near-perfect precision by selecting only a very small number of extremely likely items. Often, there is an inverse relationship between precision and recall, where it is possible to increase one at the cost of reducing the other. You can tweak a model to increase precision at a cost of a lower recall, or on the other hand increase recall at the cost of lower precision.
+
 
 # Computer Vision
 ## [Given stride S and kernel sizes for each layer of a (1-dimensional) CNN, create a function to compute the receptive field of a particular node in the network. This is just finding how many input nodes actually connect through to a neuron in a CNN.](https://arxiv.org/pdf/1603.07285.pdf)
@@ -240,6 +272,17 @@ Is the process of estimating the 3-D structure of a scene from a set of 2-D imag
 2. Structure from Motion from Multiple Views
 ### Multi-View Stereo (MVS)
 SfM is better suited for creating models of large scenes while MVS is better suited for creating models of small objects.
+
+## What is data augmentation? Can you give some examples?
+Data augmentation is a technique for synthesizing new data by modifying existing data in such a way that the target is not changed, or it is changed in a known way.
+- Resize
+- Horizontal or vertical flip
+- Rotate
+- Add noise
+- Deform （变形）
+- Modify colors
+
+Each problem needs a customized data augmentation pipeline. For example, on OCR, doing flips will change the text and won’t be beneficial; however, resizes and small rotations may help.
 
 # ML Models
 ## Decision Tree

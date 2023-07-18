@@ -1,4 +1,4 @@
-![tanh](https://github.com/XinyuKang/MLE-Related/assets/46883505/0ed3f311-51f2-4d36-b407-780375d5e57c)<img width="617" alt="image" src="https://github.com/XinyuKang/MLE-Related/assets/46883505/80436af9-79a4-45cc-88af-a604eb88f5bd"># General Machine Learning
+# General Machine Learning
 ## [What's the trade-off between bias and variance?](https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229)
 1. Bias is an error from wrong assumptions about the data, e.g. assuming data is linear when in reality is complex. Model with high bias pays very little attention to the training data and oversimplifies the model. Leads to high error on training and test data.
 2. Variance is an error from high sensitivity to small fluctuations in the training set. Model with high variance pays too much attention to the training data and does not generalize on the data it hasn't seen before. Thus performs very well on the training data but very bad on the test data.
@@ -14,6 +14,26 @@
 - `SGD uses the gradient of a randomly-chosen training example from the training set in each iteration, cost is O(1) which is n times faster than BGD`, the coefficients are updated after each training instance, rather than at the end of the batch of instances.
 - The order of the training set must be randomized at each iteration to avoid getting stuck.
 - SGD might point in the wwrong direction but the expected (average) direction is correct.
+
+## Define Learning Rate.
+Learning rate is a hyper-parameter that controls how much we are adjusting the weights of our network with respect the loss gradient.
+
+## What is Momentum (w.r.t NN optimization)?
+Momentum is a gradient descent optimization approach that adds a percentage of the prior update vector to the current update vector to speed up the learning process. When the current gradient is zero, we'd have no where to go and stuck on the flat region or a small local minimum, using momentum we can get out and continue towards the true minimum.
+
+## What is the difference between Batch Gradient Descent and Stochastic Gradient Descent?
+- Batch gradient descent computes the gradient using the whole dataset. In this case, we move somewhat directly towards an optimum solution, either local or global.
+- Stochastic gradient descent (SGD) computes the gradient using a single sample. SGD works well (Not well, I suppose, but better than batch gradient descent) for error manifolds that have lots of local maxima/minima. In this case, the somewhat noisier gradient calculated using the reduced number of samples tends to jerk the model out of local minima into a region that hopefully is more optimal. 
+
+## Epoch vs. Batch vs. Iteration.
+- Epoch: one forward pass and one backward pass of `all the training examples`.
+- Batch: examples processed together in one pass (forward and backward).
+- Iteration: number of training examples / Batch size.
+
+## What are dropouts?
+By dropping a unit out, we mean temporarily removing it from the network (i.e. `not updating the gradient descent of this node`), along with all its incoming and outgoing connections. During training, some number of layer outputs are randomly “dropped out.” This has the effect of making the layer look-like and be treated-like a layer with a different number of nodes and connectivity to the prior layer, forcing nodes within a layer to probabilistically take on more or less responsibility for the inputs.
+
+Dropout is a simple way to prevent a neural network from overfitting. 
 
 ## [Explain over- and under-fitting and how to combat them?](https://towardsdatascience.com/overfitting-vs-underfitting-a-complete-example-d05dd7e19765)
 1. **Underfitting** heppens when a model is unable to capture the underlying pattern of the data (`high bias and low variance`). Happens when training set is too small or training model is too simple.
@@ -89,8 +109,8 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 - Binary Threshold Neuron `y = 1 if x >=0 else 0`
 - Stochastic Binary Neuron  ???
 - Sigmoid Neuron `y = 1 / (1 + e^(-x))`
-- Tanh function `(e^(2alpha) - 1) / (e^(2alpha) + 1)` ![tanh](https://github.com/XinyuKang/MLE-Related/assets/46883505/c7126d44-4d9a-4e83-ba36-db21a160d010)
-
+- Tanh function `(e^(2alpha) - 1) / (e^(2alpha) + 1)`  
+<img src="tanh.jpg"  width="300" height="200">
 - Rectified Linear Unit (ReLU) `y = x if x >=0 else 0`
 
 ## Why is ReLU better and more often used than Sigmoid in Neural Networks?
@@ -183,6 +203,19 @@ Main points in Reinforcement learning:
 - The model keeps continues to learn.
 - The `best solution is decided based on the maximum reward`.
 
+## What's the difference between boosting and bagging?
+Boosting and bagging are similar, in that they are both ensembling techniques, where a number of weak learners (classifiers/regressors that are barely better than guessing) combine (through averaging or max vote) to create a strong learner that can make accurate predictions. 
+- Bagging means that you take bootstrap samples (random drawing of sample data repeatly with replacement) of your data set and each sample trains a (potentially) weak learner.
+- Boosting, on the other hand, uses `all data` to train each learner, but `instances that were misclassified` by the previous learners are given more weight so that subsequent learners give more focus to them during training.
+
+## What’s the difference between a generative and discriminative model?
+A generative model will learn categories of data while a discriminative model will simply learn the distinction between different categories of data. Discriminative models will generally outperform generative models on classification tasks.
+
+## What’s the difference between a parametric and a non-parametric model?
+Parametric Methods uses a fixed number of parameters to build the model (i.e. the number of parameters is independent of the training size N). Non-Parametric Methods use the flexible number of parameters to build the model.
+
+Parametric models are those that require the specification of some parameters before they can be used to make predictions, while non-parametric models do not rely on any specific parameter settings and therefore often produce more accurate results. 
+
 ## [What is Turing test?](https://en.wikipedia.org/wiki/Turing_test)
 It's test of a machine's ability to exhibit intelligent behaviour equivalent to that of a human.
 
@@ -204,7 +237,6 @@ Turing proposed that a human evaluator would judge natural language conversation
 
 ### Precision-Recall Trade-Off
 Precision and recall are not particularly useful metrics when used in isolation. For instance, it is possible to have perfect recall by simply retrieving every single item. Likewise, it is possible to have near-perfect precision by selecting only a very small number of extremely likely items. Often, there is an inverse relationship between precision and recall, where it is possible to increase one at the cost of reducing the other. You can tweak a model to increase precision at a cost of a lower recall, or on the other hand increase recall at the cost of lower precision.
-
 
 # Computer Vision
 ## [Given stride S and kernel sizes for each layer of a (1-dimensional) CNN, create a function to compute the receptive field of a particular node in the network. This is just finding how many input nodes actually connect through to a neuron in a CNN.](https://arxiv.org/pdf/1603.07285.pdf)
@@ -296,6 +328,17 @@ Each problem needs a customized data augmentation pipeline. For example, on OCR,
 # ML Models
 ## Decision Tree
 Decision trees are simple programs consisting of a nested sequence of “if-else” decisions based on the features (splitting rules) and A class label as a return value at the end of each sequence.
+
+## Define LSTM.
+Long Short Term Memory – is a recurrent neural network aimed to deal with the vanishing gradient problem. A common LSTM unit is composed of a cell, an `input gate`, an `output gate` and a `forget gate`. The input gate/memory gate controls what information is added to the memory cell. The forget gate controls what information is removed from the memory cell. And the output gate controls what information is output from the memory cell. This allows LSTM networks to selectively retain or discard information as it flows through the network, which allows them to learn long-term dependencies.
+- Forget gates decide what information to `discard` by assigning a value between 0 and 1. A (rounded) value of 1 means to keep the information, and a value of 0 means to discard it.
+- Input gates decide which pieces of new information to `store` in the current state, using the same system as forget gates.
+- Output gates control which pieces of information in the current state to `output` by assigning a value from 0 to 1 to the information, considering the previous and current states.
+### List the key components of LSTM.
+- Gates (forget, input, output)
+- tanh(x) (values between -1 to 1)
+- Sigmoid(x) (values between 0 to 1)
+
 
 ## What is logistic regression?
 

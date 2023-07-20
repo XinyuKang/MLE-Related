@@ -1,4 +1,7 @@
 # General Machine Learning
+## Machine Learning project life cycle?
+Data processing, model training, and model deployment.
+
 ## [What's the trade-off between bias and variance?](https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229)
 1. Bias is an error from wrong assumptions about the data, e.g. assuming data is linear when in reality is complex. Model with high bias pays very little attention to the training data and oversimplifies the model. Leads to high error on training and test data.
 2. Variance is an error from high sensitivity to small fluctuations in the training set. Model with high variance pays too much attention to the training data and does not generalize on the data it hasn't seen before. Thus performs very well on the training data but very bad on the test data.
@@ -33,7 +36,7 @@ Momentum is a gradient descent optimization approach that adds a percentage of t
 ## What are dropouts?
 By dropping a unit out, we mean temporarily removing it from the network (i.e. `not updating the gradient descent of this node`), along with all its incoming and outgoing connections. During training, some number of layer outputs are randomly “dropped out.” This has the effect of making the layer look-like and be treated-like a layer with a different number of nodes and connectivity to the prior layer, forcing nodes within a layer to probabilistically take on more or less responsibility for the inputs.
 
-Dropout is a simple way to prevent a neural network from overfitting. 
+Dropout can effectively `prevent overfitting` in the network.
 
 ## [Explain over- and under-fitting and how to combat them?](https://towardsdatascience.com/overfitting-vs-underfitting-a-complete-example-d05dd7e19765)
 1. **Underfitting** heppens when a model is unable to capture the underlying pattern of the data (`high bias and low variance`). Happens when training set is too small or training model is too simple.
@@ -114,7 +117,7 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 - Rectified Linear Unit (ReLU) `y = x if x >=0 else 0`
 
 ## Why is ReLU better and more often used than Sigmoid in Neural Networks?
-1. **Activation functions**: Introduces non-linearity into the output of a neuron. Otherwise, no matter how many layers we have, if all are linear in nature, the final activation function of last layer is nothing but just a linear function of the input of first layer! That means these two layers ( or N layers ) can be replaced by a single layer.
+1. **Activation functions**: Mathematical functions that are used to detemine the output of the neural network. `Introduces non-linearity into the output of a neuron`. Otherwise, no matter how many layers we have, if all are linear in nature, the final activation function of last layer is nothing but just a linear function of the input of first layer! That means these two layers ( or N layers ) can be replaced by a single layer. Activation functions allow the network to beeter approximate complex functions.
 2. **Sigmoid function**: 
 <img src="sigmoid.jpg"  width="300" height="200">
 
@@ -129,10 +132,12 @@ PCA is a dimensionality reduction technique to reduce the number of features of 
 3. Sparsity: Sparsity happens when the input of ReLU is negative. This means fewer neurons are firing ( sparse activation ) and the network is lighter.
 
 ## What is vanishing gradient?
-During the backpropogation of each iteration, weights are updated by gradient descent. As we add more and more hidden layers, back propagation becomes less and less useful in passing information to the lower layers. In effect, as information is passed back, the gradients begin to vanish and become small relative to the weights of the networks. In the worst case, this may completely stop the neural network from further training.
+During the backpropogation of each iteration, weights are updated by gradient descent. As we add more and more hidden layers, back propagation becomes less and less useful in passing information to the lower layers. In effect, as information is passed back, the gradients begin to vanish (become very small) and become `small relative to the weights of the networks`. In the worst case, this may completely stop the neural network from further training.
+
+Can be caused by: the use of too many layers or the use of inappropriate activation functions
 
 ## [What is entropy?](https://towardsdatascience.com/understanding-entropy-the-golden-measurement-of-machine-learning-4ea97c663dc3)
-Entropy is a measurement of disorder/chaos or uncertainty in a system. The higher the entropy, the more chaos in the system.
+Entropy is a measurement of disorder./chaos or uncertainty in a system. The higher the entropy, the more chaos in the system.
 
 For example, roos a coins and ends up with [tails, heads, heads, tails] has high entropy, but [tails, tails, tails, tails] has low entropy.  
 
@@ -157,7 +162,7 @@ An ensemble is the combination of multiple models to create a single prediction.
 We need diverse models for creating an ensemble. Diversity can be achieved by:
 
 - Using different ML algorithms. For example, you can combine logistic regression, k-nearest neighbors, and decision trees.
-- Using different subsets of the data for training. This is called **bagging**.
+- Using different subsets of the data for training and the class predicted by the majority of them is predicted as the final output. This is called **bagging**. One example is the **random forest**.
 - Giving a different weight to each of the samples of the training set. If this is done iteratively, weighting the samples according to the errors of the ensemble, it’s called **boosting**.
 
 Many winning solutions to data science competitions are ensembles. However, in real-life machine learning projects, engineers need to find a balance between execution time and accuracy.
@@ -238,7 +243,36 @@ Turing proposed that a human evaluator would judge natural language conversation
 ### Precision-Recall Trade-Off
 Precision and recall are not particularly useful metrics when used in isolation. For instance, it is possible to have perfect recall by simply retrieving every single item. Likewise, it is possible to have near-perfect precision by selecting only a very small number of extremely likely items. Often, there is an inverse relationship between precision and recall, where it is possible to increase one at the cost of reducing the other. You can tweak a model to increase precision at a cost of a lower recall, or on the other hand increase recall at the cost of lower precision.
 
+## What are the differences between Deep learning and Machine learning?
+Deep learning is a subset of Machine learning, in that machine will learn from data using algorithms without been explicitly programmed. But deep learning `specifically used layered structure of algorithms called neural networks` and usually requires more amount of data for training compared to machine learning.
+
+## What is transfer learning?
+Is a machine learning technique where knowledge learned from a task is re-used in order to boost performance on a related task. 
+- **Develop Model Approach**: One model fit on the source task is used as the starting point for a model on the second task of interest, which involves using `all or parts` of the model.
+- **Pre-trained Model Approach**: A pre-trained source model is chosen from available models. Reuse it as the starting point for a model on the second task of interest.
+
 # Computer Vision
+## What is CNN?
+CNNs are similar to traditional neural networks but they have an additional layer called the convolutional layer to help extract features from images. 
+
+## Architecture of a CNN?
+an input layer, a series of convolutional layers (responsible for extracting features from the input image), a pooling layer (responsible for reducing the dimensionality of the feature map), and an output layer (responsible for classification).
+
+## What is the significance of pooling layers in a CNN?
+Pooling layers are used to `reduce the dimensionality of the data` and extract the most imortant fatures. Typically used after convolutional layers to reduce the size of data before it is passed to the fully connected layers.
+
+## What is the main purpose of using zero padding in a CNN?
+To ensure that the input image is the same size as the output image
+
+## how do you tackle a multi-class classification problem
+If the number of classes is more than two, it is known as a multiclass classification problem. 
+We can use for example:
+1. Naive bayes:A probabilistic classifier based on Bayes Theorem.
+2. Decision Trees: It uses decision trees that start with all the data in the root and progressively split upon different features to generalize the model results.
+3. **Nearest Neighbors**: It is a non-parametric classification algorithm that does not require training. As the name suggests, it finds the “k” nearest data points for a given unknown data point, and the class which is dominant within those “k” neighbors is predicted as the output class. To find the neighbors, it uses distance metrics like euclidean distance and manhattan distance. You can find the optimal value for k using hyperparameter tuning.
+4. Ensemble Models: Bagging and Boosting.
+5. Neural Networks
+
 ## [Given stride S and kernel sizes for each layer of a (1-dimensional) CNN, create a function to compute the receptive field of a particular node in the network. This is just finding how many input nodes actually connect through to a neuron in a CNN.](https://arxiv.org/pdf/1603.07285.pdf)
 1. **Padding**: the amount of pixels added to an image when it is being processed.
 2. **Stride**: the amount of movement over the image at a time.
@@ -268,6 +302,8 @@ Note that in the case of an image of size 32x32x3, with a CNN with a filter size
 Normalization is to transform features to be on a similar scale and helps training. `Batch norm` does the same for the hidden layers. A network is a seires of layers where the output of one layers becomes the input of to the next. Any layer in a neural network is the first layer of a smaller subsequent network. 
 
 The distribution of each layer's inputs changes during the training as the parameters of the previous layers are changed by the backpropagation. Therefore, batch normalization normalizes the inputs of each layer to have mean of 0 and standard deciation of 1. 
+**
+Batch normalization helps to improve the training by reducing the internal **[covariate shift](https://towardsdatascience.com/detecting-covariate-shift-a-guide-to-the-multivariate-approach-c099bd1891b9#:~:text=Covariate%20shift%20is%20a%20situation,between%20training%20and%20production%20data.)**. 
 
 This is done for each mini-batch `at each layer`.
 
@@ -300,11 +336,29 @@ For a role in Computer Vision. Max-pooling in a CNN allows you to reduce computa
 The encoder CNN can basically be thought of as a feature extraction network, while the decoder uses that information to predict the image segments by "decoding" the features and upscaling to the original image size.
 
 ## What is the significance of Residual Networks?
-The main thing that residual connections did was allow for `direct feature access from previous layers`. This makes information propagation throughout the network much easier. One very interesting paper about this shows how using `local skip` connections gives the network a type of ensemble multi-path structure, giving features multiple paths to propagate throughout the network.
+The main thing that residual connections did was allow for `direct feature access from previous layers`. This is done by adding `"shortcut" or "skip" connections` between layers in the network which allows for `information to flow more freely between layers`. 
+
+This makes information propagation throughout the network much easier. One very interesting paper about this shows how using `local skip` connections gives the network a type of ensemble multi-path structure, giving features multiple paths to propagate throughout the network.
 
 ## Why would you use many small convolutional kernels such as 3x3 rather than a few large ones?
 There are 2 reasons: First, you can use several smaller kernels rather than few large ones to get the same receptive field and capture more spatial context, but with the smaller kernels you are `using less parameters and computations`. Secondly, because with smaller kernels you will be using more filters, you'll be able to use `more activation functions` and thus have a more discriminative mapping function being learned by your CNN.
- 
+
+## What are some best practices that need to be followed when designing a CNN?
+– Use a smaller kernel size for the first layer, and gradually increase the size for subsequent layers
+– Use a stride of 1 for the first layer, and gradually increase the stride for subsequent layers
+– Use a padding of 1 for the first layer, and gradually decrease the padding for subsequent layers
+– Use a pooling layer after every 2-3 convolutional layers
+– Use a fully connected layer at the end of the network
+
+## What are the different types of filters used in CNNs?
+There are a few different types of filters that are commonly used in CNNs, including the Sobel filter (edge detection), the Prewitt filter (edge detection), and the Laplacian filter (edge detection). Each of these filters is designed to detect specific types of features in an image
+
+## What are anchor boxes?
+Anchor boxes are a type of bounding box used in object detection. They are typically used in conjunction with a sliding window, where the window is moved across an image and anchor boxes are placed at various locations. The anchor boxes are then used to predict the location of objects in the image.
+
+## Are CNNs capable of generating text or audio? If yes, then how?
+Yes, CNNs are capable of generating text or audio. This is done by using a technique called **sequence to sequence learning**, which is a type of learning that is used to train neural networks to `convert sequences of data from one format to another`.
+
 ## Talk me through how you would create a 3D model of an object from imagery and depth sensor measurements taken at all angles around the object.
 There are two popular methods for 3D reconstruction:
 ### [Structure from Motion (SfM)](https://www.mathworks.com/help/vision/ug/structure-from-motion.html)
@@ -339,7 +393,6 @@ Long Short Term Memory – is a recurrent neural network aimed to deal with the 
 - tanh(x) (values between -1 to 1)
 - Sigmoid(x) (values between 0 to 1)
 
-
 ## What is logistic regression?
 
 # [Some conventions](https://www.baeldung.com/cs/epoch-vs-batch-vs-mini-batch#:~:text=The%20mini%2Dbatch%20is%20a,of%20the%20dataset%20are%20used.)
@@ -350,3 +403,16 @@ Long Short Term Memory – is a recurrent neural network aimed to deal with the 
    - In stochastic gradient descent, one epoch corresponds to n iterations where n is the number of training samples.
    - In mini-batch gradient descent, one epoch corresponds to \frac{n}{b} iterations where b is the size of the mini-batch.
 5. Noise means the data points that don't really represent the true properties of your data.
+
+# Additional coding questions
+## What are the main principles of OOP?
+1. **Encapsulation**: all important information is contained inside an object and only select information is exposed. Other objects do not have access to this class or the authority to make changes. They are only able to call a list of public functions or methods.
+2. **Abstraction**: Objects only reveal internal mechanisms that are relevant for the use of other objects, hiding any unnecessary implementation code.
+3. **Inheritance**: Classes can reuse code from other classes. Relationships and subclasses between objects can be assigned, enabling developers to reuse common logic while still maintaining a unique hierarchy.
+4. **Polymorphism**: Polymorphism allows different types of objects to pass through the same interface. The program will determine which meaning or usage is necessary for each execution of that object from a parent class.
+
+# Mathematics
+## Tylor's theorem
+Taylor's theorem gives an approximation of a k-times differentiable function around a given point by a polynomial of degree k, called the k-th-order Taylor polynomial. Is often referred to as the `quadratic approximation`.
+
+Formula for the approximation of function f at point a is : `f(x) = f(a) + f'(a)(x-a) + (f''(a)/2!)(x-a)^2 + ... + (f^(k)(a)/k!)(x-a)^k`
